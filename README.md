@@ -92,28 +92,28 @@ python cliente.py
 Las capturas de pantalla que demuestran el funcionamiento correcto del sistema se encuentran organizadas en la carpeta `img/`:
 
 ### 1. Inicio del Servidor Flask e Inicialización de la Base de Datos
-![Inicio del Servidor](img/captura 1 pfo2.png)
+![Inicio del Servidor](<img/captura 1 pfo2.png>)
 
 ### 2. Conexión de cliente
-![Registro de Usuario](img/captura 2 pfo2.png)
+![Registro de Usuario](<img/captura 2 pfo2.png>)
 
 ### 3 Registro de Usuario 
-![Registro de Usuario](img/alta.png)
+![Registro de Usuario](<img/alta.png>)
 
 ### 4. Inicio de Sesión y Autenticación de Credenciales
-![Login Exitoso](img/captura 3 pfo2.png)
+![Login Exitoso](<img/captura 3 pfo2.png>)
 
 ### 5. Vista de Bienvenida HTML y gestión de tareas
-![Vista HTML en Navegador](img/captura 4 pfo2.png)
+![Vista HTML en Navegador](<img/captura 4 pfo2.png>)
 
 ### 6. Ver Tareas 
-![Gestión de Tareas](img/captura 5 pfo2.png)
+![Gestión de Tareas](<img/captura 5 pfo2.png>)
 
 ### 7. Vista HTML 
-![Gestión de Tareas](img/captura 6 pfo2.png)
+![Gestión de Tareas](<img/captura 6 pfo2.png>)
 
 ### 8. Vista tareas web
-![Gestión de Tareas](img/tareas html.png)
+![Gestión de Tareas](<img/tareas html.png>)
 ---
 
 ## 💡 Respuestas Conceptuales Exigidas en la Consigna
