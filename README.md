@@ -103,17 +103,17 @@ Las capturas de pantalla que demuestran el funcionamiento correcto del sistema s
 ### 4. Inicio de Sesión y Autenticación de Credenciales
 ![Login Exitoso](<img/captura 3 pfo2.png>)
 
-### 5. Vista de Bienvenida HTML y gestión de tareas
-![Vista HTML en Navegador](<img/captura 4 pfo2.png>)
+### 5. Vista de Bienvenida y gestión de tareas
+![Vista ](<img/captura 4 pfo2.png>)
 
 ### 6. Ver Tareas 
 ![Gestión de Tareas](<img/captura 5 pfo2.png>)
 
 ### 7. Vista HTML 
-![Gestión de Tareas](<img/captura 6 pfo2.png>)
+![Gestión de Tareas html](<img/captura 6 pfo2.png>)
 
 ### 8. Vista tareas web
-![Gestión de Tareas](<img/tareas html.png>)
+![Gestión de Tareas html](<img/tareas html.png>)
 ---
 
 ## 💡 Respuestas Conceptuales Exigidas en la Consigna
