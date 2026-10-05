@@ -1,3 +1,4 @@
+#SCIULLI, Guillermo Miguel - COM E - 
 import requests
 import sys
 import time
@@ -11,7 +12,7 @@ def mostrar_encabezado():
     print("="*55)
 
 def probar_conexion_servidor():
-    """Verifica que el servidor Flask esté corriendo en localhost:5000."""
+    #Verifica que el servidor Flask esté corriendo en localhost:5000.
     try:
         respuesta = requests.get(f"{URL_BASE}/", timeout=3)
         if respuesta.status_code == 200:
@@ -26,7 +27,7 @@ def probar_conexion_servidor():
         return False
 
 def registrar_usuario():
-    """Solicita credenciales y realiza una petición POST /registro al servidor."""
+    #Solicita credenciales y realiza una petición POST /registro al servidor.
     print("\n--- REGISTRO DE NUEVO USUARIO ---")
     usuario = input("Ingrese nombre de usuario: ").strip()
     contrasena = input("Ingrese contraseña: ").strip()
@@ -53,7 +54,7 @@ def registrar_usuario():
         print(f"\n[X] Ocurrió un error al comunicarse con la API: {e}")
 
 def iniciar_sesion():
-    """Solicita credenciales y realiza una petición POST /login."""
+    #Solicita credenciales y realiza una petición POST /login.
     print("\n--- INICIO DE SESIÓN ---")
     usuario = input("Nombre de usuario: ").strip()
     contrasena = input("Contraseña: ").strip()
@@ -86,7 +87,7 @@ def iniciar_sesion():
         return None
 
 def consultar_vista_tareas_html():
-    """Solicita la ruta GET /tareas y muestra información del HTML / JSON devuelto."""
+    #Solicita la ruta GET /tareas y muestra información del HTML / JSON devuelto.
     print("\n--- CONSULTA DE VISTA GET /tareas ---")
     try:
         # Petición solicitando JSON explícitamente
@@ -103,7 +104,7 @@ def consultar_vista_tareas_html():
         print(f"[X] Error al consultar la ruta /tareas: {e}")
 
 def menu_gestion_tareas(usuario_activo):
-    """Menú secundario para la creación y gestión de tareas una vez iniciada la sesión."""
+    #Menú secundario para la creación y gestión de tareas una vez iniciada la sesión.
     while True:
         print(f"\n--- PANEL DE TAREAS (Usuario: {usuario_activo['nombre']}) ---")
         print("1. Ver mis tareas")

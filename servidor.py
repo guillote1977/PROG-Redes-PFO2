@@ -1,3 +1,4 @@
+#SCIULLI, Guillermo Miguel - COM E - 
 import os
 import sqlite3
 from flask import Flask, request, jsonify, render_template_string
@@ -10,13 +11,13 @@ DB_NAME = "tareas.db"
 # INICIALIZACIÓN DE LA BASE DE DATOS SQLITE
 # ==========================================
 def obtener_conexion_bd():
-    """Establece conexión con la base de datos SQLite y retorna el objeto de conexión."""
+    #Establece conexión con la base de datos SQLite y retorna el objeto de conexión.
     conexion = sqlite3.connect(DB_NAME)
     conexion.row_factory = sqlite3.Row  # Permite acceder a las columnas por nombre
     return conexion
 
 def inicializar_bd():
-    """Crea las tablas 'usuarios' y 'tareas' si no existen en la base de datos."""
+    #Crea las tablas 'usuarios' y 'tareas' si no existen en la base de datos.
     with obtener_conexion_bd() as conexion:
         cursor = conexion.cursor()
         
@@ -51,7 +52,7 @@ def inicializar_bd():
 
 @app.route('/', methods=['GET'])
 def inicio():
-    """Ruta raíz de estado de la API."""
+    #Ruta raíz de estado de la API.
     return jsonify({
         "estado": "Servidor activo",
         "version": "1.0.0",
@@ -70,11 +71,11 @@ def inicio():
 # ------------------------------------------
 @app.route('/registro', methods=['POST'])
 def registro():
-    """
-    Endpoint para registrar un nuevo usuario.
-    Recibe JSON: {"usuario": "nombre", "contraseña": "1234"} o {"usuario": "nombre", "contrasena": "1234"}
-    Almacena el usuario con la contraseña hasheada de manera segura.
-    """
+    
+    #Endpoint para registrar un nuevo usuario.
+    #Recibe JSON: {"usuario": "nombre", "contraseña": "1234"} o {"usuario": "nombre", "contrasena": "1234"}
+    #Almacena el usuario con la contraseña hasheada de manera segura.
+    
     datos = request.get_json(silent=True) or request.form
     
     if not datos:
@@ -118,11 +119,11 @@ def registro():
 # ------------------------------------------
 @app.route('/login', methods=['POST'])
 def login():
-    """
-    Endpoint para autenticar un usuario existente.
-    Recibe JSON: {"usuario": "nombre", "contraseña": "1234"}
-    Verifica las credenciales comparando el hash de la contraseña.
-    """
+    
+    #Endpoint para autenticar un usuario existente.
+    #Recibe JSON: {"usuario": "nombre", "contraseña": "1234"}
+    #Verifica las credenciales comparando el hash de la contraseña.
+    
     datos = request.get_json(silent=True) or request.form
     
     if not datos:
@@ -160,11 +161,11 @@ def login():
 # ------------------------------------------
 @app.route('/tareas', methods=['GET'])
 def tareas():
-    """
-    Endpoint GET /tareas: Muestra un HTML de bienvenida interactivo al acceder desde un navegador.
-    Si se solicita mediante JSON o cliente API, responde con el estado del módulo de tareas.
-    """
-    # Si el cliente prefiere JSON (por encabezado Accept) o manda ?format=json
+    
+    #Endpoint GET /tareas: Muestra un HTML de bienvenida interactivo al acceder desde un navegador.
+    #Si se solicita mediante JSON o cliente API, responde con el estado del módulo de tareas.
+    
+    # Si se prefiere JSON o manda ?format=json
     if request.headers.get('Accept') == 'application/json' or request.args.get('format') == 'json':
         return jsonify({
             "mensaje": "Bienvenido a la API REST de Gestión de Tareas - PFO2",
@@ -179,34 +180,172 @@ def tareas():
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Bienvenido - Sistema de Gestión de Tareas</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
         <style>
-            body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 40px; text-align: center; }
-            .container { max-width: 650px; background: white; padding: 30px; margin: 0 auto; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-            h1 { color: #2c3e50; font-size: 28px; margin-bottom: 10px; }
-            p { font-size: 16px; color: #666; line-height: 1.6; }
-            .badge { display: inline-block; background: #27ae60; color: white; padding: 6px 14px; border-radius: 20px; font-weight: bold; font-size: 14px; margin-bottom: 20px; }
-            .endpoints { text-align: left; background: #f8f9fa; padding: 15px 20px; border-left: 4px solid #3498db; border-radius: 4px; margin-top: 20px; }
-            code { background: #eef1f3; padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #c0392b; }
+            :root {
+                --primary: #4f46e5;
+                --bg-gradient-1: #0f172a;
+                --bg-gradient-2: #1e1b4b;
+                --text-main: #f8fafc;
+                --text-muted: #94a3b8;
+                --card-bg: rgba(30, 41, 59, 0.7);
+                --card-border: rgba(255, 255, 255, 0.1);
+            }
+            body { 
+                font-family: 'Inter', sans-serif; 
+                background: linear-gradient(135deg, var(--bg-gradient-1), var(--bg-gradient-2)); 
+                color: var(--text-main); 
+                margin: 0; 
+                padding: 40px 20px; 
+                min-height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-sizing: border-box;
+            }
+            .container { 
+                max-width: 700px; 
+                width: 100%;
+                background: var(--card-bg); 
+                padding: 45px; 
+                border-radius: 24px; 
+                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); 
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid var(--card-border);
+                transform: translateY(0);
+                transition: transform 0.4s ease, box-shadow 0.4s ease;
+            }
+            .container:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 30px 60px -15px rgba(0,0,0,0.7);
+            }
+            h1 { 
+                color: #ffffff; 
+                font-size: 34px; 
+                font-weight: 800;
+                margin-bottom: 14px; 
+                letter-spacing: -0.5px;
+                background: linear-gradient(to right, #818cf8, #c084fc);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            p { 
+                font-size: 16px; 
+                color: var(--text-muted); 
+                line-height: 1.7; 
+            }
+            .badge { 
+                display: inline-flex; 
+                align-items: center;
+                background: rgba(16, 185, 129, 0.15); 
+                color: #34d399; 
+                padding: 8px 16px; 
+                border-radius: 9999px; 
+                font-weight: 600; 
+                font-size: 13px; 
+                margin-bottom: 24px; 
+                border: 1px solid rgba(16, 185, 129, 0.3);
+                letter-spacing: 0.5px;
+                text-transform: uppercase;
+            }
+            .badge::before {
+                content: '';
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                background-color: #34d399;
+                border-radius: 50%;
+                margin-right: 8px;
+                box-shadow: 0 0 8px #34d399;
+                animation: pulse 2s infinite;
+            }
+            @keyframes pulse {
+                0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.4); }
+                70% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+            }
+            .endpoints { 
+                text-align: left; 
+                background: rgba(15, 23, 42, 0.6); 
+                padding: 26px; 
+                border-radius: 16px; 
+                margin-top: 35px; 
+                border: 1px solid var(--card-border);
+            }
+            .endpoints h3 {
+                margin-top: 0;
+                font-size: 18px;
+                color: #e2e8f0;
+                font-weight: 600;
+                margin-bottom: 20px;
+            }
+            ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+            li {
+                padding: 14px 0;
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+                display: flex;
+                align-items: center;
+                color: #cbd5e1;
+                font-size: 15px;
+                transition: color 0.2s ease;
+            }
+            li:hover {
+                color: #ffffff;
+            }
+            li:last-child {
+                border-bottom: none;
+                padding-bottom: 0;
+            }
+            code { 
+                background: rgba(99, 102, 241, 0.15); 
+                padding: 6px 12px; 
+                border-radius: 8px; 
+                font-family: 'Fira Code', monospace; 
+                color: #818cf8; 
+                font-size: 13px;
+                font-weight: 600;
+                margin-right: 15px;
+                border: 1px solid rgba(99, 102, 241, 0.3);
+                transition: background 0.2s ease;
+            }
+            li:hover code {
+                background: rgba(99, 102, 241, 0.25);
+            }
+            .footer {
+                margin-top: 40px; 
+                font-size: 13px; 
+                color: #64748b; 
+                text-align: center;
+                border-top: 1px solid rgba(255,255,255,0.05);
+                padding-top: 25px;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <span class="badge">API REST Funcional - PFO2</span>
-            <h1>¡Bienvenido al Sistema de Gestión de Tareas!</h1>
-            <p>Esta plataforma permite gestionar usuarios de forma segura mediante <strong>hasheo de contraseñas</strong> y almacenar tareas persistentes con <strong>SQLite</strong>.</p>
+            <h1>Sistema de Gestión de Tareas</h1>
+            <p>Esta plataforma permite gestionar usuarios de forma segura mediante <strong>hasheo de contraseñas</strong> y almacenar tareas persistentes de forma eficiente con <strong>SQLite</strong>.</p>
             
             <div class="endpoints">
                 <h3>Endpoints disponibles para interactuar:</h3>
                 <ul>
-                    <li><code>POST /registro</code> : Registrar un nuevo usuario</li>
-                    <li><code>POST /login</code> : Iniciar sesión de usuario</li>
-                    <li><code>GET /tareas</code> : Vista de bienvenida (HTML / JSON)</li>
-                    <li><code>POST /tareas</code> : Crear una nueva tarea</li>
-                    <li><code>GET /tareas/usuario/&lt;id&gt;</code> : Listar tareas de un usuario</li>
-                    <li><code>PUT /tareas/&lt;id&gt;/completar</code> : Marcar tarea como completada</li>
+                    <li><code>POST /registro</code> Registrar un nuevo usuario</li>
+                    <li><code>POST /login</code> Iniciar sesión de usuario</li>
+                    <li><code>GET /tareas</code> Vista de bienvenida (HTML / JSON)</li>
+                    <li><code>POST /tareas</code> Crear una nueva tarea</li>
+                    <li><code>GET /tareas/usuario/&lt;id&gt;</code> Listar tareas de un usuario</li>
+                    <li><code>PUT /tareas/&lt;id&gt;/completar</code> Marcar tarea como completada</li>
                 </ul>
             </div>
-            <p style="margin-top: 25px; font-size: 13px; color: #888;">Cátedra: Programación sobre Redes | IFTS N° 29</p>
+            <div class="footer">
+                Programación sobre Redes | IFTS N° 29
+            </div>
         </div>
     </body>
     </html>
@@ -218,7 +357,7 @@ def tareas():
 # ------------------------------------------
 @app.route('/tareas', methods=['POST'])
 def crear_tarea():
-    """Crea una nueva tarea asociada a un usuario registrado."""
+    #Crea una nueva tarea asociada a un usuario registrado.
     datos = request.get_json(silent=True) or request.form
     if not datos:
         return jsonify({"error": "No se enviaron datos válidos"}), 400
@@ -260,7 +399,7 @@ def crear_tarea():
 
 @app.route('/tareas/usuario/<int:usuario_id>', methods=['GET'])
 def listar_tareas_usuario(usuario_id):
-    """Retorna todas las tareas pertenecientes a un usuario."""
+    #Retorna todas las tareas pertenecientes a un usuario.
     try:
         with obtener_conexion_bd() as conexion:
             cursor = conexion.cursor()
@@ -287,7 +426,7 @@ def listar_tareas_usuario(usuario_id):
 
 @app.route('/tareas/<int:tarea_id>/completar', methods=['PUT'])
 def completar_tarea(tarea_id):
-    """Marca una tarea como completada."""
+    #Marca una tarea como completada.
     try:
         with obtener_conexion_bd() as conexion:
             cursor = conexion.cursor()

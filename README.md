@@ -2,8 +2,10 @@
 ## Sistema de Gestión de Tareas con API REST, SQLite y Autenticación de Usuarios
 
 **Materia:** Programación sobre Redes  
-**Cátedra:** Alan Portillo, Germán Ríos  
+**Profesor:** Alan Portillo  
 **Carrera:** Tecnicatura Superior en Desarrollo de Software (IFTS N° 29)  
+**Comisión:** D
+**Alumno:** Sciulli Guillermo Miguel
 
 ---
 
@@ -85,24 +87,55 @@ python cliente.py
 
 ---
 
+## 📸 Capturas de Pantalla de Pruebas Exitosas
+
+Las capturas de pantalla que demuestran el funcionamiento correcto del sistema se encuentran organizadas en la carpeta `img/`:
+
+### 1. Inicio del Servidor Flask e Inicialización de la Base de Datos
+![Inicio del Servidor](img/captura 1 pfo2.png)
+
+### 2. Conexión de cliente
+![Registro de Usuario](img/captura 2 pfo2.png)
+
+### 3 Registro de Usuario 
+![Registro de Usuario](img/alta.png)
+
+### 4. Inicio de Sesión y Autenticación de Credenciales
+![Login Exitoso](img/captura 3 pfo2.png)
+
+### 5. Vista de Bienvenida HTML y gestión de tareas
+![Vista HTML en Navegador](img/captura 4 pfo2.png)
+
+### 6. Ver Tareas 
+![Gestión de Tareas](img/captura 5 pfo2.png)
+
+### 7. Vista HTML 
+![Gestión de Tareas](img/captura 6 pfo2.png)
+
+### 8. Vista tareas web
+![Gestión de Tareas](img/tareas html.png)
+---
+
 ## 💡 Respuestas Conceptuales Exigidas en la Consigna
 
 ### 1. ¿Por qué es fundamental hashear contraseñas?
 
-Hashear las contraseñas antes de almacenarlas en la base de datos es una buena práctica de ciberseguridad fundamental por las siguientes razones:
+- **Importancia del Hasheo de Contraseñas y Uso de Sal (Salt)**
+El almacenamiento de contraseñas en formato de texto plano representa una vulnerabilidad de seguridad crítica en el diseño de software. En el servidor desarrollado, la protección del vector de autenticación se fundamenta en la función criptográfica unidireccional de la librería 'werkzeug.security' (implementada mediante el algoritmo PBKDF2 con SHA256 y sal dinámica).
+- **Mitigación ante Filtraciones de Datos (Data Leaks):** Si la base de datos SQLite 'tareas.db' fuera comprometida por un atacante, las contraseñas reales de los usuarios no se verían expuestas. El atacante únicamente obtendría cadenas aleatorias no invertibles.
+- **Irreversibilidad Criptográfica:** Una función de hash es un algoritmo matemático de una sola vía. No existe una función inversa que permita 'deshashear' la cadena almacenada para recuperar la clave original.
+- **Inmunidad contra Tablas Rainbow y Diccionarios (Salt):** El método de Werkzeug incorpora de forma transparente un valor aleatorio único de 'sal' (salt) antes de aplicar el hasheo. Esto garantiza que dos usuarios con la misma clave (ej: '123456') generen hashes completamente distintos en la base de datos, anulando la efectividad de ataques con tablas precalculadas.
+- **Cumplimiento del Principio de Menor Privilegio:** La arquitectura garantiza que ni siquiera los administradores de la base de datos o desarrolladores del sistema conozcan las contraseñas originales de los usuarios.
 
-- **Protección contra filtraciones de datos (Data Leaks)**: Si la base de datos resulta comprometida o sustraída por un atacante, las contraseñas no se encontrarán expuestas en texto plano. El atacante solo obtendrá hashes criptográficos irreversibles.
-- **Inversibilidad Criptográfica (Funciones de una sola vía)**: Una función de hasheo (como PBKDF2 o SHA256) es un algoritmo unidireccional. Resulta computacionalmente inviable reconstruir la contraseña original a partir de su valor hash.
-- **Protección contra ataques por Diccionario y Tablas Rainbow**: Al utilizar sal de hasheo (*salt*), cada contraseña genera un hash único incluso si dos usuarios utilizan la misma contraseña en texto plano, neutralizando ataques masivos con tablas precalculadas.
-- **Cumplimiento Normativo y Privacidad**: Normativas internacionales de protección de datos (como GDPR o ISO 27001) exigen que las credenciales de los usuarios nunca se almacenen o transmitan sin protección adecuada.
 
 ---
 
 ### 2. Ventajas de usar SQLite en este proyecto
 
-SQLite es el motor de base de datos relacional ideal para este proyecto por los siguientes motivos:
+- **Ventajas Técnicas de SQLite en Arquitecturas Web Ligeras**
+SQLite es el motor de base de datos relacional sin servidor (serverless) más utilizado en la industria. Para este proyecto de gestión de tareas, su elección ofrece claras ventajas arquitectónicas frente a motores cliente-servidor tradicionales como MySQL o PostgreSQL:
+- **Arquitectura Embebida (Serverless):** No requiere la instalación, configuración ni mantenimiento de un servicio de proceso independiente escuchando en un puerto de red. La base de datos reside directamente en el mismo espacio de memoria del proceso de Python.
+- **Almacenamiento Portátil en Archivo Único:** Toda la estructura relacional (tablas 'usuarios' y 'tareas', índices y restricciones de integridad) se empaqueta en el archivo físico 'tareas.db', garantizando máxima portabilidad entre entornos.
+- **Cero Configuración (Zero-Configuration):** Se conecta nativamente mediante el módulo estándar 'sqlite3' de Python, eliminando la necesidad de credenciales complejas o cadenas de conexión de red.
+- **Transacciones ACID Completas:** Cumple rigurosamente con los principios de Atomicidad, Consistencia, Aislamiento y Durabilidad, protegiendo la integridad de las relaciones entre usuarios y tareas ante fallos o apagados repentinos.
 
-- **Serverless (Sin servidor independiente)**: A diferencia de motores tradicionales como PostgreSQL o MySQL, SQLite no requiere la instalación, configuración ni mantenimiento de un proceso de servidor de base de datos separado.
-- **Almacenamiento en Archivo Único y Portable**: Todos los datos (tablas, índices, usuarios y tareas) se guardan en un único archivo de disco (`tareas.db`), lo que facilita la portabilidad, distribución y ejecución inmediata del código en cualquier entorno.
-- **Cero Configuración (Zero-Configuration)**: Se integra de manera nativa en la biblioteca estándar de Python mediante el módulo `sqlite3`, sin necesidad de instalar controladores ni dependencias externas.
-- **Rendimiento Excelente y Transacciones ACID**: Es extremadamente rápido en operaciones de lectura y escritura para aplicaciones de pequeña y mediana escala, garantizando la integridad de los datos mediante cumplimiento estricto de propiedades ACID (Atomicidad, Consistencia, Aislamiento y Durabilidad).
